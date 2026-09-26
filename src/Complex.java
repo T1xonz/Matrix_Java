@@ -30,4 +30,35 @@ public final class Complex {
                 (im * o.re - re * o.im) / d);
     }
 
+    public static Complex parse(String text) {
+        String s = text.trim().replace(',', '.');
+        if (s.isEmpty()) throw new NumberFormatException("Пустое число");
+
+        if (!s.endsWith("i")) {
+            return new Complex(Double.parseDouble(s), 0);
+        }
+
+        String body = s.substring(0, s.length() - 1);   //without 'i'
+
+        int split = -1;
+        for (int k = body.length() - 1; k > 0; k--) {
+            char c = body.charAt(k);
+            if ((c == '+' || c == '-')) {
+                split = k;
+                break;
+            }
+        }
+
+        String reStr = split == -1 ? "" : body.substring(0, split);
+        String imStr = split == -1 ? body : body.substring(split);
+
+        double im;
+        if (imStr.isEmpty() || imStr.equals("+")) im = 1;
+        else if (imStr.equals("-"))               im = -1;
+        else                                       im = Double.parseDouble(imStr);
+
+        double re = reStr.isEmpty() ? 0 : Double.parseDouble(reStr);
+        return new Complex(re, im);
+    }
+
 }
