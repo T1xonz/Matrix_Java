@@ -13,9 +13,12 @@ public final class Complex {
     public static final Complex ZERO = new Complex(0, 0);
     public static final Complex ONE  = new Complex(1, 0);
 
+
+
     public Complex plus(Complex o)  { return new Complex(re + o.re, im + o.im); }
     public Complex minus(Complex o) { return new Complex(re - o.re, im - o.im); }
 
+    public Complex anti(){ return new Complex(-re, -im); }
 
     //use form: (a+bi)(c+bi) == (ac-bd)+(ad+bc)i
     public Complex multiply(Complex o) {
@@ -29,6 +32,9 @@ public final class Complex {
         return new Complex((re * o.re + im * o.im) / d,
                 (im * o.re - re * o.im) / d);
     }
+
+    public double abs()      { return Math.hypot(re, im); }
+    public boolean isZero()  { return abs() < 0; }
 
     public static Complex parse(String text) {
         String s = text.trim().replace(',', '.');
@@ -61,4 +67,24 @@ public final class Complex {
         return new Complex(re, im);
     }
 
+    private static String fmt(double x) {
+        String s = String.format(Locale.US, "%.4f", x);
+        s = s.replaceAll("0+$", "").replaceAll("\\.$", "");
+        return s.equals("-0") ? "0" : s;
+    }
+
+    @Override
+    public String toString() {
+        String r = fmt(re);
+        String i = fmt(Math.abs(im));
+        if (i.equals("0")) return r;
+        String imPart = (i.equals("1") ? "" : i) + "i";  // 1i -> i
+        String sign = im < 0 ? "-" : "+";
+        if (r.equals("0")) return (im < 0 ? "-" : "") + imPart;
+        return r + sign + imPart;
+    }
+
+
 }
+
+
