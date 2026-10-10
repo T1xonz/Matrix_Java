@@ -149,5 +149,24 @@ public final class ComplexMatrix {
         return this.multiply(o.inverse());
     }
 
+    @Override
+    public String toString() {
+        String[][] s = new String[rows][cols];
+        int width = 0;
+        for (int i = 0; i < rows; i++)
+            for (int j = 0; j < cols; j++) {
+                s[i][j] = data[i][j].toString();
+                width = Math.max(width, s[i][j].length());
+            }
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < rows; i++) {
+            sb.append("| ");
+            for (int j = 0; j < cols; j++)
+                sb.append(String.format("%" + width + "s ", s[i][j]));
+            sb.append("|\n");
+        }
+        return sb.toString();
+    }
 }
+
 

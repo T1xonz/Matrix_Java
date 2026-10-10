@@ -20,12 +20,12 @@ public final class Complex {
 
     public Complex anti(){ return new Complex(-re, -im); }
 
-    //use form: (a+bi)(c+bi) == (ac-bd)+(ad+bc)i
+    //we use form: (a+bi)(c+bi) == (ac-bd)+(ad+bc)i
     public Complex multiply(Complex o) {
         return new Complex(re * o.re - im * o.im,
                 re * o.im + im * o.re);
     }
-    // use form: (a+bi)(a-bi) == a^2-b^2i^2 == a^2+b^2
+    // we use form: (a+bi)(a-bi) == a^2-b^2i^2 == a^2+b^2
     public Complex divide(Complex o) {
         double d = o.re * o.re + o.im * o.im;
         if (d == 0) throw new ArithmeticException("Деление на ноль");
